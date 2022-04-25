@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { Input } from './Login';
-// import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import styled from "styled-components";
+import { Input } from "./Login";
 
 // add style for form
 export const Form = styled.form``;
@@ -10,43 +9,24 @@ export const Form = styled.form``;
 export const Textarea = styled.textarea``;
 
 export const EditBookData = () => {
-  const [pl, setPl] = useState({
-    thumbnailUrl: '',
-    longDescription: '',
-  });
-  const handleChange = (e) => {
-    setPl({ ...pl, [e.target.name]: e.target.value });
-    console.log(pl);
-  };
-
-  const { id } = useParams();
-  const navigate = useNavigate();
   const handleUpdate = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:8080/books/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify(pl),
-      headers: { 'Content-Type': 'application/json' },
-    });
-    navigate(`/books/${id}`);
+    // make a PATCH request to http://localhost:8080/books/${id} and update thubnail and long description fields
+    // on successfull request navigate to previous page
   };
 
   return (
     <>
       <Form onSubmit={handleUpdate}>
         <Input
-          name='thumbnailUrl'
-          data-testid='update-form-thumbnail'
-          placeholder='Enter updated thumbnail url'
-          onChange={handleChange}
+          data-testid="update-form-thumbnail"
+          placeholder="Enter updated thumbnail url"
         />
         <Textarea
-          name='longDescription'
-          data-testid='update-form-description'
-          placeholder='Update long Description'
-          onChange={handleChange}
+          data-testid="update-form-description"
+          placeholder="Update long Description"
         />
-        <Input dat-testid='update-form-submit' type='submit' value='Update' />
+        <Input dat-testid="update-form-submit" type="submit" value="Update" />
       </Form>
     </>
   );

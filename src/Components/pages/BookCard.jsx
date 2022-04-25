@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import styled  from "styled-components";
 export const Flex = styled.div`
-//  add required style
+border:solid black 1px
 `;
-export const BookCard = ({elem}) => {
-  const { id, title, isbn, pageCount, thumbnailUrl } = elem;
+export const BookCard = (props) => {
+  const { id, title, isbn, pageCount, thumbnailUrl } = props;
   return (
     <>
     <Link to = {`/books/${id}`}>

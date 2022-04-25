@@ -1,26 +1,25 @@
-import React, { useState } from "react";
+// import axios from "axios";
+import React, { createContext, useState } from "react";
 
-const AuthContext = React.createContext();
+const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
 
-  const handleLogin = (email, password) => {
+  const handleLogin =async (email, password) => {
     //  api request to reqres.in for the token
-    const pl = { email: email, password: password };
-    
-    fetch("https://reqres.in/api/login", {
-      method: "POST",
-      body: JSON.stringify(pl),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((response) => setToken(response.token))
-      .catch((error) => console.log(error));
+    let res = await fetch("https://reqres.in/api/login",{
+      method:"POST",
+      headers:{"content-type":"application/json"},
+      body:JSON.stringify({email, password})
+    });
+    let data = await res.json()
+    console.log(data.token)
+    setToken(data.token)
   };
   const handleLogout = () => {
     //  set token back to " " once logged out
-    setToken("");
+    setToken("")
   };
 
   const value = { handleLogin, token, handleLogout };

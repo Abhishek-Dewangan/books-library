@@ -1,42 +1,40 @@
-import React, { useContext } from 'react';
-import { useEffect, useState } from 'react';
-// import axios from "axios";
-import { BookCard } from './BookCard';
-import styled, { css } from 'styled-components';
-import { AuthContext } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useEffect, useState } from "react";
+import { BookCard } from "./BookCard";
+import styled, { css } from "styled-components";
 
-export const Grid = styled.div`
-  width: 500px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: 200px 200px;
-  gap: 30px;
+const Grid = styled.div`
+display: grid;
+grid-template-columns: repeat(2,1fr);
+margin: auto 5%;
+gap: 25px;
 `;
 
 const Books = () => {
-  const { token, handleLogout } = useContext(AuthContext);
-
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:8080/books')
-      .then((res) => res.json())
-      .then((res) => setData(res));
+    // make a GET request to http://localhost:8080/books to get all the books data
+    const getData = async () => {
+      let res = await fetch("http://localhost:8080/books");
+      let Data = await res.json();
+      // console.log(Data);
+      setData(Data);
+    };
+    getData()
   }, []);
 
   return (
     <>
-      {token ? (
-        <Grid data-testid='books-container'>
-          {data.map((elem) => (
-            <BookCard elem={elem} />
-          ))}
-        </Grid>
-      ) : (
-        <>
-          please <Link to='/login'>Login</Link> first to continue
-        </>
-      )}
+      <h1>Books</h1>
+      <Grid data-testid="books-container">
+        {/* {!!data && 
+          // map thorugh the data and use <BookCard/> component to display each book
+          } */}
+
+        {data.map((elem) => {
+          return <BookCard key={elem.id} {...elem} />;
+        })}
+      </Grid>
     </>
   );
 };
