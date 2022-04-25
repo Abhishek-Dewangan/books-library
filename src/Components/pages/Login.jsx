@@ -9,12 +9,11 @@ import { Form } from "./EditBookData";
 
 // add input styling
 export const Input = styled.input`
-font-size: 18px;
-width: 500px;
-padding: 10px;
-background-color: rgb(197, 247, 230);
-color: black;
-margin: 15px;
+ height:40px;
+ background:#acc;
+ border:none;
+ font-size:1rem;
+ border-radius:5px;
 `;
 
 
@@ -25,15 +24,21 @@ export const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/books";
+
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin(email, password);
   };
+
+
   useEffect(() => {
     if (token) {
       navigate(from, { replace: true });
     }
   }, [token]);
+
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -44,7 +49,6 @@ export const Login = () => {
           type="text"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <br />
         <Input
           data-testid="login-form-password"
           placeholder="Enter Password"
@@ -52,7 +56,6 @@ export const Login = () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <br />
         <Input value = "Login" type={"submit"} data-testid="login-form-submit" />
       </Form>
     </>

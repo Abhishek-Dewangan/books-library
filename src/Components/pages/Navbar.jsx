@@ -3,39 +3,43 @@ import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { AuthContext } from '../context/AuthContext';
 
-const Nav = styled.div`
-  margin: 10px;
-  background-color: pink;
-  padding: 15px;
-  font-size: 15px;
-`;
-const LinkDiv = styled.div`
-  width: 400px;
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
-  font-weight: bold;
-  font-family: system-ui;
-  text-decoration: none;
-`;
-
 export const Navbar = () => {
   const { token } = useContext(AuthContext);
+
   // use token to chnage the text from Login to Logout once logged in successfully
+
+  const Nav = styled.div`
+    width: 100%;
+    margin: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    background: pink;
+    font-size: 20px;
+    padding: 15px;
+  `;
+  const Button = styled.button`
+    font-size: 20px;
+    border: none;
+    background: transparent;
+  `;
 
   return (
     <>
       <Nav>
-        <LinkDiv>
-          <Link to='/'>Home</Link>
-          <Link to='/about'>About</Link>
-          <Link to='/books'>Books</Link>
-          {token ? (
-            <Link to='/logout'>Logout</Link>
-          ) : (
-            <Link to='/login'>Login</Link>
-          )}
-        </LinkDiv>
+        {/* keep all the NavLinks here */}
+        <Link to='/'>
+          <Button> Home</Button>
+        </Link>
+        <Link to='about'>
+          <Button>About</Button>{' '}
+        </Link>
+        <Link to='books'>
+          <Button> Books</Button>{' '}
+        </Link>
+        <Link to={token ? '/logout' : '/login'}>
+          {' '}
+          <Button>{token ? 'Logout' : 'Login'} </Button>{' '}
+        </Link>
       </Nav>
     </>
   );

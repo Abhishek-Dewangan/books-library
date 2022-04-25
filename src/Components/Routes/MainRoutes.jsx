@@ -15,14 +15,26 @@ const Mainroutes = () => {
     <>
       <Navbar />
       <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="login" element={<Login/>} />
-          <Route path="logout" element={<Logout/>} />
-          <Route path="books" element={
+       {/* keep all the routes here  */}
+        {/* /books/* route need to be protected */}
+        <Route path="/" element={<Home/>}/>
+         <Route path="about" element={<About />} />
+
+        
+        <Route path="books" element={
           <RequiredAuth>
-          <Books/>
-          </RequiredAuth>} />
-          <Route path="about" element={<About/>} />
+            <Books/>
+          </RequiredAuth>
+        } />
+        <Route path="books/:id" element={<SingleBook />} />
+        <Route path="books/:id/edit" element={<EditBookData/>}/>
+
+        
+
+        <Route path="login" element={<Login/>}/>
+        <Route path="logout" element={<Logout />} />
+         
+        
       </Routes>
     </>
   );
